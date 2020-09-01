@@ -15,7 +15,11 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == docker04
+          - node.hostname == Amon
+     resources:
+        limits:
+          memory: 1G
+          cpus: '2.0'
 
   moodle:
     image: bitnami/moodle:3.9.1
@@ -37,16 +41,17 @@ services:
     depends_on:
       - mariadb
     deploy:
-      placement:
-        constraints:
-          - node.hostname == docker04
+     resources:
+        limits:
+          memory: 2G
+          cpus: '2.0'
 
 volumes:
   mariadb:
     driver_opts:
       o: bind
       type: none
-      device: /database/mariadb/mariadb
+      device: /databases/moodle/mariadb
   moodle:
     driver_opts:
       o: bind
