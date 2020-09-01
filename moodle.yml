@@ -16,7 +16,7 @@ services:
       placement:
         constraints:
           - node.hostname == Amon
-     resources:
+      resources:
         limits:
           memory: 1G
           cpus: '2.0'
