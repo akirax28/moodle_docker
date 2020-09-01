@@ -1,6 +1,6 @@
 # vim: set relativenumber nonu shiftwidth=2 tabstop=2 softtabstop=-1 expandtab:
 
-version: '2'
+version: '3.7'
 services:
   mariadb:
     image: mariadb:10.5.5
@@ -52,3 +52,8 @@ volumes:
       o: bind
       type: none
       device: /data/moodle/mariadb
+  backups:
+    driver_opts:
+      o: bind
+      type: none
+      device: /data/moodle/backups
