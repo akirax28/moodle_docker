@@ -1,0 +1,54 @@
+# vim: set relativenumber nonu shiftwidth=2 tabstop=2 softtabstop=-1 expandtab:
+
+version: '2'
+services:
+  mariadb:
+    image: mariadb:10.5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=moodle
+      - MYSQL_USER=moodle
+      - MYSQL_DATABASE=moodle
+      - MYSQL_PASSWORD=mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+      - backups:/backups
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == docker04
+
+  moodle:
+    image: bitnami/moodle:3.9.1
+    environment:
+      MOODLE_USERNAME: admin
+      MOODLE_PASSWORD: admin
+      MOODLE_EMAIL: fabio.santos@ifrr.edi.br
+      MARIADB_HOST: mariadb
+      MARIADB_PORT_NUMBER: 3306
+      MOODLE_DATABASE_USER: moodle
+      MOODLE_DATABASE_NAME: moodle
+      MOODLE_DATABASE_PASSWORD: moodlePassword
+      ALLOW_EMPTY_PASSWORD: "no"
+    ports:
+      - 8094:80
+      - 4434:443
+    volumes:
+      - moodle:/bitnami'
+    depends_on:
+      - mariadb
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == docker04
+
+volumes:
+  mariadb:
+    driver_opts:
+      o: bind
+      type: none
+      device: /database/mariadb/mariadb
+  moodle:
+    driver_opts:
+      o: bind
+      type: none
+      device: /data/moodle/mariadb
