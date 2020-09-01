@@ -37,7 +37,7 @@ services:
       - 8094:80
       - 4434:443
     volumes:
-      - moodle:/bitnami'
+      - moodle:/bitnami
     depends_on:
       - mariadb
     deploy:
@@ -56,7 +56,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /data/moodle/mariadb
+      device: /data/moodle/moodle
   backups:
     driver_opts:
       o: bind
